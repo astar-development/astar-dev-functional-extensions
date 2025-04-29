@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8456212E-F453-483A-8E27-7494722AE10F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{3C168EA0-2CFB-490A-8E3A-BE08F456DD3F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AStar.Dev.Functional.Extensions", "src\AStar.Dev.Functional.Extensions\AStar.Dev.Functional.Extensions.csproj", "{3FC5E2DB-6C2C-4D72-8498-39A121722334}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AStar.Dev.Functional.Extensions.Tests.Unit", "test\AStar.Dev.Functional.Extensions.Tests.Unit\AStar.Dev.Functional.Extensions.Tests.Unit.csproj", "{F61660A7-160E-4654-94A5-F8D5D75FFBD6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3FC5E2DB-6C2C-4D72-8498-39A121722334} = {8456212E-F453-483A-8E27-7494722AE10F}
+		{F61660A7-160E-4654-94A5-F8D5D75FFBD6} = {3C168EA0-2CFB-490A-8E3A-BE08F456DD3F}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3FC5E2DB-6C2C-4D72-8498-39A121722334}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FC5E2DB-6C2C-4D72-8498-39A121722334}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FC5E2DB-6C2C-4D72-8498-39A121722334}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FC5E2DB-6C2C-4D72-8498-39A121722334}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F61660A7-160E-4654-94A5-F8D5D75FFBD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F61660A7-160E-4654-94A5-F8D5D75FFBD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F61660A7-160E-4654-94A5-F8D5D75FFBD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F61660A7-160E-4654-94A5-F8D5D75FFBD6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

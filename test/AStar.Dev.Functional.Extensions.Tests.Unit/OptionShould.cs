@@ -1,19 +1,19 @@
 using JetBrains.Annotations;
 
-namespace AStar.Dev.Functional.Extensions;
+namespace AStar.Dev.Functional.Extensions.Tests.Unit;
 
-[TestSubject(typeof(Option))]
+[TestSubject(typeof(Option<>))]
 public class OptionShould
 {
     [Fact]
-    public void ReturnTheSpecifiedObjectAsAnOptionalObject()
+    public void OverrideToStringForSome()
     {
-        new MockClass().Optional().ShouldBeAssignableTo<Option<MockClass>>();
+        Option.Some("Test Text").ToString().ShouldBe("Some(Test Text)");
     }
 
     [Fact]
-    public void ReturnTheSpecifiedObjectAsAnInstanceOfTheSomeClass()
+    public void OverrideToStringForNone()
     {
-        new MockClass().Optional().ShouldBeAssignableTo<Some<MockClass>>();
+        Option.None<string>().ToString().ShouldBe("None");
     }
 }

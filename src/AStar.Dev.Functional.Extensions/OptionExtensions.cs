@@ -1,53 +1,146 @@
+using System;
+using System.Collections.Generic;
+
 namespace AStar.Dev.Functional.Extensions;
 
 /// <summary>
-///     The <see cref="OptionExtensions" /> class contains a basic set of extension methods to help map, filter, etc. the original object
+///     Functional helpers and utilities for working with <see cref="Option{T}" />.
 /// </summary>
 public static class OptionExtensions
 {
     /// <summary>
-    ///     The Map{T,TResult} method will either map the Some{T} to a new Some or return a new None of the specified result type
+    ///     Attempts to extract the value from an <see cref="Option{T}" />.
     /// </summary>
-    /// <typeparam name="T">The type of the source object</typeparam>
-    /// <typeparam name="TResult">The type of object expected from the map</typeparam>
-    /// <param name="obj">The object to map</param>
-    /// <param name="map">The Map function</param>
-    /// <returns>Either a new Some or a new None of the specified type</returns>
-    public static Option<TResult> Map<T, TResult>(this Option<T> obj, Func<T, TResult> map)
+    public static bool TryGetValue<T>(this Option<T> option, out T value)
     {
-        return obj is Some<T> some ? new Some<TResult>(map(some.Content)) : new None<TResult>();
+        if (option is Option<T>.Some some)
+        {
+            value = some.Value;
+
+            return true;
+        }
+
+        value = default!;
+
+        return false;
     }
 
     /// <summary>
+    ///     Converts a value to an <see cref="Option{T}" />, treating default/null as <c>None</c>.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="obj"></param>
-    /// <param name="predicate"></param>
-    /// <returns></returns>
-    public static Option<T> Filter<T>(this Option<T> obj, Func<T, bool> predicate)
+    public static Option<T> ToOption<T>(this T value)
     {
-        return obj is Some<T> some && !predicate(some.Content) ? new None<T>() : obj;
+        return EqualityComparer<T>.Default.Equals(value, default!)
+                   ? Option.None<T>()
+                   : new Option<T>.Some(value);
     }
 
     /// <summary>
+    ///     Enables deconstruction of an option into a boolean and value pair.
     /// </summary>
+    /// <param name="option"></param>
+    /// <param name="isSome"></param>
+    /// <param name="value"></param>
     /// <typeparam name="T"></typeparam>
-    /// <param name="obj"></param>
-    /// <param name="substitute"></param>
-    /// <returns></returns>
-    public static T Reduce<T>(this Option<T> obj, T substitute)
+    public static void Deconstruct<T>(this Option<T> option, out bool isSome, out T? value)
     {
-        return obj is Some<T> some ? some.Content : substitute;
+        isSome = option is Option<T>.Some;
+        value  = isSome ? ((Option<T>.Some)option).Value : default;
     }
 
     /// <summary>
+    ///     Converts a value to an <see cref="Option{T}" /> if it satisfies the predicate.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="obj"></param>
-    /// <param name="substitute"></param>
-    /// <returns></returns>
-    public static T Reduce<T>(this Option<T> obj, Func<T> substitute)
+    public static Option<T> ToOption<T>(this T value, Func<T, bool> predicate)
     {
-        return obj is Some<T> some ? some.Content : substitute();
+        return predicate(value)
+                   ? new Option<T>.Some(value)
+                   : Option.None<T>();
+    }
+
+    /// <summary>
+    ///     Converts a nullable value type to an <see cref="Option{T}" />.
+    /// </summary>
+    public static Option<T> ToOption<T>(this T? nullable) where T : struct
+    {
+        return nullable.HasValue
+                   ? new Option<T>.Some(nullable.Value)
+                   : Option.None<T>();
+    }
+
+    /// <summary>
+    ///     Transforms the value inside an <see cref="Option{T}" /> if present.
+    /// </summary>
+    public static Option<TResult> Map<T, TResult>(this Option<T> option, Func<T, TResult> map)
+    {
+        return option.Match(
+                            some => new Option<TResult>.Some(map(some)),
+                            Option.None<TResult>);
+    }
+
+    /// <summary>
+    ///     Chains another <see cref="Option{T}" />-producing function.
+    /// </summary>
+    public static Option<TResult> Bind<T, TResult>(this Option<T> option, Func<T, Option<TResult>> bind)
+    {
+        return option.Match(bind, Option.None<TResult>);
+    }
+
+    /// <summary>
+    ///     Converts an <see cref="Option{T}" /> to a <see cref="Result{T, TError}" />.
+    /// </summary>
+    public static Result<T, TError> ToResult<T, TError>(this Option<T> option, Func<TError> errorFactory)
+    {
+        return option.Match<Result<T, TError>>(
+                                               some => new Result<T, TError>.Ok(some),
+                                               () => new Result<T, TError>.Error(errorFactory()));
+    }
+
+    /// <summary>
+    ///     Determines whether the option contains a value.
+    /// </summary>
+    public static bool IsSome<T>(this Option<T> option)
+    {
+        return option is Option<T>.Some;
+    }
+
+    /// <summary>
+    ///     Determines whether the option is empty.
+    /// </summary>
+    public static bool IsNone<T>(this Option<T> option)
+    {
+        return option is Option<T>.None;
+    }
+
+    /// <summary>
+    ///     Converts an <see cref="Option{T}" /> to a nullable type.
+    /// </summary>
+    public static T? ToNullable<T>(this Option<T> option) where T : struct
+    {
+        return option is Option<T>.Some some ? some.Value : null;
+    }
+
+    /// <summary>
+    ///     Converts an <see cref="Option{T}" /> to a single-element enumerable or an empty sequence.
+    /// </summary>
+    public static IEnumerable<T> ToEnumerable<T>(this Option<T> option)
+    {
+        return option is Option<T>.Some some ? [ some.Value ] : [];
+    }
+
+    /// <summary>
+    ///     Gets the value of the option or returns a fallback value.
+    /// </summary>
+    public static T OrElse<T>(this Option<T> option, T fallback)
+    {
+        return option is Option<T>.Some some ? some.Value : fallback;
+    }
+
+    /// <summary>
+    ///     Gets the value of the option or throws an exception if absent.
+    /// </summary>
+    public static T OrThrow<T>(this Option<T> option, Exception? ex = null)
+    {
+        return option is Option<T>.Some some ? some.Value : throw ex ?? new InvalidOperationException("No value present");
     }
 }

@@ -1,0 +1,73 @@
+﻿@using AStar.Dev.SampleBlazor.Services
+<nav class="navbar navbar-expand-sm bg-light border-bottom box-shadow mb-3">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">FunctionalResults Sample</a>
+        <button class="navbar-toggler" @onclick="ToggleNavMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="@NavMenuCssClass" @onclick="CollapseNavMenu">
+            <ul class="navbar-nav flex-grow-1">
+                <li class="nav-item px-3">
+                    <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                        <span class="oi oi-home" aria-hidden="true"></span> Home
+                    </NavLink>
+                </li>
+                <li class="nav-item px-3">
+                    <NavLink class="nav-link" href="greet">
+                        👋 Greet
+                    </NavLink>
+                </li>
+                <li class="nav-item px-3">
+                    <NavLink class="nav-link" href="divide">
+                        ➗ Divide
+                    </NavLink>
+                </li>
+                <li class="nav-item px-3">
+                    <NavLink class="nav-link" href="try-parse">
+                        🔍 Try Parse
+                    </NavLink>
+                </li>
+                <li class="nav-item px-3">
+                    <NavLink class="nav-link" href="option-demo">
+                        🔍 Option Demo
+                    </NavLink>
+                </li>
+                <li class="nav-item px-3">
+                    <button @onclick="Toggle">
+                        @(Theme.IsDarkMode ? "☀️ Light" : "🌙 Dark")
+                    </button>
+
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+@inject ThemeService Theme
+
+@code {
+    private bool collapseNavMenu = true;
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse navbar-collapse" : "navbar-collapse";
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+
+    private void CollapseNavMenu()
+    {
+        collapseNavMenu = true;
+    }
+
+    protected override void OnInitialized()
+    {
+        Theme.OnChange += StateHasChanged;
+    }
+
+    private async Task Toggle()
+    {
+        await Theme.ToggleAsync();
+    }
+
+}

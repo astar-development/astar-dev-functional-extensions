@@ -1,0 +1,19 @@
+🔐 Setup Instructions
+Tag your release Push a tag like v1.0.0 to trigger the workflow:
+
+bash
+git tag v1.0.0
+git push origin v1.0.0
+Add your NuGet API key
+
+Go to your GitHub repo → Settings → Secrets and variables → Actions
+
+Add a new secret named NUGET_API_KEY with your key from nuget.org
+
+Ensure your .csproj includes:
+
+xml
+<GenerateDocumentationFile>true</GenerateDocumentationFile>
+<PublishRepositoryUrl>true</PublishRepositoryUrl>
+<EmbedUntrackedSources>true</EmbedUntrackedSources>
+You now have a fully automated, tag-driven release pipeline that builds, tests, packs, and publishes your NuGet package with full Source Link and XML doc support. Want to add prerelease support or auto-versioning from Git tags next? I’ve got templates for that too.

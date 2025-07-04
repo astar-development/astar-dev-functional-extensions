@@ -1,75 +1,163 @@
-using JetBrains.Annotations;
+﻿namespace AStar.Dev.Functional.Extensions.Tests.Unit;
 
-namespace AStar.Dev.Functional.Extensions;
-
-[TestSubject(typeof(Result<,>))]
 public class ResultShould
 {
-    [Fact]
-    public void BeOfTypeStruct() => typeof(Result<,>).IsValueType.ShouldBeTrue();
-
-    [Fact]
-    public void BeImmutable() => typeof(Result<,>)?.DeclaringType?.Name.ShouldBe("sdsds");
-
-    [Fact]
-    public void ContainTwoGenericClassParameters()
+    private static Result<int, string>.Ok Ok(int value)
     {
-        var result = typeof(Result<,>).GetGenericArguments();
+        return new(value);
+    }
 
-        result.Length.ShouldBe(2);
+    private static Result<int, string>.Error Err(string error)
+    {
+        return new(error);
     }
 
     [Fact]
-    public void ContainTheIsSuccessFlagSetToFalseByDefault()
-        => new Result<string, string>().IsSuccess.ShouldBeFalse();
-
-    [Fact]
-    public void ContainTheIsFailureFlagSetToTrueByDefault()
-        => new Result<string, string>().IsFailure.ShouldBeTrue();
-
-    [Fact]
-    public void CreateSuccessResult()
+    public void Match_ReturnsCorrectBranch()
     {
-        var result = Result<string, string>.Success("Some value here");
+        var ok  = Ok(42);
+        var err = Err("fail");
 
-        result.IsSuccess.ShouldBeTrue();
-        result.Value.ShouldBe("Some value here");
+        var okResult = ok.Match(
+                                success => $"Success: {success}",
+                                error => $"Error: {error}");
+
+        var errResult = err.Match(
+                                  success => $"Success: {success}",
+                                  error => $"Error: {error}");
+
+        Assert.Equal("Success: 42", okResult);
+        Assert.Equal("Error: fail", errResult);
     }
 
     [Fact]
-    public void CreateFailureResult()
+    public void Map_TransformsSuccess()
     {
-        var result = Result<string, string>.Failure("Some value here");
+        var result = Ok(10).Map(x => x * 2);
 
-        result.IsSuccess.ShouldBeFalse();
-        result.Value.ShouldBeNull();
+        var output = result.Match(
+                                  success => success,
+                                  error => -1);
+
+        Assert.Equal(20, output);
     }
 
     [Fact]
-    public void CreateImplicitSuccessResult()
+    public void Map_PreservesError()
     {
-        var result = ImplicitResult(false);
+        var result = Err("oops").Map(x => x * 2);
 
-        result.IsSuccess.ShouldBeTrue();
-        result.Value.ShouldBe("Some value here");
+        var output = result.Match(
+                                  success => success,
+                                  error => -1);
+
+        Assert.Equal(-1, output);
     }
 
     [Fact]
-    public void CreateImplicitFailureResult()
+    public void Bind_ChainsSuccess()
     {
-        var result = ImplicitResult(true);
-
-        result.IsSuccess.ShouldBeFalse();
-        result.Value.ShouldBeNull();
-    }
-
-    private static Result<int, string> ImplicitResult(bool fail)
-    {
-        if (!fail)
+        Result<int, string> DoubleIfEven(int x)
         {
-            return "Some value here";
+            return x % 2 == 0 ? Ok(x * 2) : Err("odd");
         }
 
-        return -1;
+        var result = Ok(4).Bind(DoubleIfEven);
+
+        var output = result.Match(
+                                  success => success,
+                                  error => -1);
+
+        Assert.Equal(8, output);
+    }
+
+    [Fact]
+    public void Bind_ShortCircuitsOnError()
+    {
+        var result = Err("fail").Bind(x => Ok(x * 2));
+
+        var output = result.Match(
+                                  success => success,
+                                  error => -1);
+
+        Assert.Equal(-1, output);
+    }
+
+    [Fact]
+    public void Tap_InvokesSideEffectOnSuccess()
+    {
+        var tapped = 0;
+        var result = Ok(5).Tap(x => tapped = x);
+        Assert.Equal(5, tapped);
+    }
+
+    [Fact]
+    public void Tap_DoesNotInvokeOnError()
+    {
+        var tapped = 0;
+        var result = Err("fail").Tap(x => tapped = x);
+        Assert.Equal(0, tapped);
+    }
+
+    [Fact]
+    public void Linq_Query_ComposesCorrectly()
+    {
+        var result = from a in Ok(2)
+                     from b in Ok(3)
+                     select a + b;
+
+        var output = result.Match(
+                                  success => success,
+                                  error => -1);
+
+        Assert.Equal(5, output);
+    }
+
+    [Fact]
+    public async Task MapAsync_TransformsSuccess()
+    {
+        var result = await new ValueTask<Result<int, string>>(Ok(3))
+                         .MapAsync(x => x + 1);
+
+        var output = result.Match(
+                                  success => success,
+                                  error => -1);
+
+        Assert.Equal(4, output);
+    }
+
+    [Fact]
+    public async Task BindAsync_ChainsAsyncResults()
+    {
+        ValueTask<Result<int, string>> DoubleAsync(int x)
+        {
+            return new(new Result<int, string>.Ok(x * 2));
+        }
+
+        var result = await new ValueTask<Result<int, string>>(Ok(5))
+                         .BindAsync(DoubleAsync);
+
+        var output = result.Match(
+                                  success => success,
+                                  error => -1);
+
+        Assert.Equal(10, output);
+    }
+
+    [Fact]
+    public async Task MatchAsync_HandlesBothBranches()
+    {
+        var ok = await new ValueTask<Result<int, string>>(Ok(7))
+                     .MatchAsync(
+                                 success => $"Yay: {success}",
+                                 error => $"Oops: {error}");
+
+        var err = await new ValueTask<Result<int, string>>(Err("bad"))
+                      .MatchAsync(
+                                  success => $"Yay: {success}",
+                                  error => $"Oops: {error}");
+
+        Assert.Equal("Yay: 7",    ok);
+        Assert.Equal("Oops: bad", err);
     }
 }

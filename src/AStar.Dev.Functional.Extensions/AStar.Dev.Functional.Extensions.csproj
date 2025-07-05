@@ -9,7 +9,7 @@
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <PackageId>AStar.Dev.Functional.Extensions</PackageId>
-        <Version>0.1.1-alpha</Version>
+        <Version>0.1.2-alpha</Version>
         <Authors>Jason</Authors>
         <Company>AStar Development</Company>
         <Description>F#-inspired Result type with functional combinators, async support, and LINQ integration.</Description>
@@ -21,6 +21,7 @@
         <RootNamespace>AStar.Dev.Functional.Extensions</RootNamespace>
         <LangVersion>latest</LangVersion>
         <Nullable>enable</Nullable>
+        <IsPackable>true</IsPackable>
     </PropertyGroup>
 
     <ItemGroup>

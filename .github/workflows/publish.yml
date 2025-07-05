@@ -3,6 +3,8 @@ name: Publish NuGet Package
 on:
   workflow_dispatch:
   push:
+    branches:
+      - main
     tags:
       - 'v*'  # Triggers on version tags like v1.0.0
 
@@ -13,26 +15,20 @@ jobs:
     steps:
       - name: 🧾 Checkout code
         uses: actions/checkout@v4
-        if: github.ref == 'refs/heads/main'
 
       - name: 🛠 Setup .NET
         uses: actions/setup-dotnet@v4
-        if: github.ref == 'refs/heads/main'
         with:
           dotnet-version: '9.x'
 
       - name: 🔍 Restore dependencies
         run: dotnet restore
-        if: github.ref == 'refs/heads/main'
 
 #      - name: 🧪 Run tests
 #        run: dotnet test --configuration Release --no-build
-      #        if: github.ref == 'refs/heads/main'
 
       - name: 📦 Pack NuGet package
         run: dotnet pack --configuration Release --no-build --output ./nupkg
-        if: github.ref == 'refs/heads/main'
 
       - name: 🚀 Publish to NuGet.org
         run: dotnet nuget push ./nupkg/*.nupkg --skip-duplicate --source https://int.nugettest.org/v3.index.json # https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
-        if: github.ref == 'refs/heads/main'

@@ -24,6 +24,9 @@ jobs:
       - name: 🔍 Restore dependencies
         run: dotnet restore
 
+      - name: 🛠 Build solution
+        run: dotnet build --configuration Release
+
       #      - name: 🧪 Run tests
       #        run: dotnet test --configuration Release --no-build
 

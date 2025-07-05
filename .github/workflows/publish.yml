@@ -7,6 +7,7 @@ on:
 
 jobs:
   build:
+    if: startsWith(github.ref, 'refs/tags/v') && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
 
     steps:
@@ -25,8 +26,8 @@ jobs:
         run: dotnet test --configuration Release --no-build
 
       - name: 📦 Pack NuGet package
-        run: dotnet pack --configuration Release --no-build --output ./nupkg
+        run: dotnet pack ./src/AStar.Dev.Functional.Extensions/AStar.Dev.Functional.Extensions.csproj --configuration Release --no-build --output ./nupkg
 
       - name: 🚀 Publish to NuGet.org
-        run: dotnet nuget push ./nupkg/*.nupkg --skip-duplicate --source https://int.nugettest.org/v3.index.json # https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
+        run: dotnet nuget push ./**/*.nupkg --skip-duplicate --source https://int.nugettest.org/v3.index.json # https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
 

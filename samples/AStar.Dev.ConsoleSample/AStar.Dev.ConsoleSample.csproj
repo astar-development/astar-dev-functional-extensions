@@ -9,7 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\AStar.Dev.Functional.Extensions\AStar.Dev.Functional.Extensions.csproj"/>
+      <ProjectReference Include="..\..\src\AStar.Dev.Functional.Extensions\AStar.Dev.Functional.Extensions.csproj" />
     </ItemGroup>
 
 </Project>

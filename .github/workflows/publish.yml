@@ -9,6 +9,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      ProjectName: 'AStar.Dev.Functional.Extensions'
 
     steps:
       - name: 🧾 Checkout code
@@ -22,11 +24,11 @@ jobs:
       - name: 🔍 Restore dependencies
         run: dotnet restore
 
-#      - name: 🧪 Run tests
-#        run: dotnet test --configuration Release --no-build
+      #      - name: 🧪 Run tests
+      #        run: dotnet test --configuration Release --no-build
 
       - name: 📦 Pack NuGet package
-        run: dotnet pack --configuration Release --no-build --output ./nupkg
+        run: dotnet pack .\src\${{ env.ProjectName }}\${{ env.ProjectName }}.csproj --configuration Release --output ./nupkg
 
       - name: 🚀 Publish to NuGet.org
         run: dotnet nuget push ./nupkg/*.nupkg --skip-duplicate --source https://int.nugettest.org/v3.index.json # https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}

@@ -62,10 +62,10 @@ jobs:
 #          .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
 
       - name: Pack NuGet package
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main-not'
         run: dotnet pack .\src\${{ env.ProjectName }}\${{ env.ProjectName }}.csproj
 
       - name: Push to NuGet
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main-not'
         run: dotnet nuget push "**\${{ env.ProjectName }}.*.nupkg" --api-key ${{secrets.nuget_api_key}} --skip-duplicate --source https://api.nuget.org/v3/index.json
 

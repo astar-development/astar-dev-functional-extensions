@@ -9,6 +9,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{2C3EC910-77D3-475C-A9EE-E8F9F9C8C43C}"
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\publish.yml = .github\workflows\publish.yml
+		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AStar.Dev.ConsoleSample", "samples\AStar.Dev.ConsoleSample\AStar.Dev.ConsoleSample.csproj", "{16513013-C9A4-4707-9D79-87A2F5BBCF5C}"

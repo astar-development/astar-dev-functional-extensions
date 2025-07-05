@@ -1,73 +1,74 @@
+﻿using System;
+
 namespace AStar.Dev.Functional.Extensions;
 
-
 /// <summary>
-///
+///     Represents a discriminated union of success or failure.
 /// </summary>
-/// <typeparam name="TError"></typeparam>
-/// <typeparam name="TSuccess"></typeparam>
-public readonly struct Result<TError, TSuccess>
+/// <typeparam name="TSuccess">The type of the success value.</typeparam>
+/// <typeparam name="TError">The type of the error reason.</typeparam>
+public abstract class Result<TSuccess, TError>
 {
-    /// <summary>
-    ///
-    /// </summary>
-    public readonly TSuccess? Value { get; }
-
-    /// <summary>
-    ///
-    /// </summary>
-    public readonly TError?   Error { get; }
-
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="successObject"></param>
-    /// <param name="errorObject"></param>
-    /// <param name="isSuccess"></param>
-    private Result(TSuccess? successObject, TError? errorObject, bool isSuccess)
+    private Result()
     {
-        Value          = successObject;
-        Error          = errorObject;
-        this.IsSuccess = isSuccess;
     }
 
     /// <summary>
-    ///
     /// </summary>
-    public bool IsSuccess { get; }
-
-    /// <summary>
-    ///
-    /// </summary>
-    public bool IsFailure => !IsSuccess;
-
-#pragma warning disable CA1000
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="value"></param>
+    /// <param name="onSuccess"></param>
+    /// <param name="onError"></param>
+    /// <typeparam name="TResult"></typeparam>
     /// <returns></returns>
-    public static Result<TError, TSuccess> Success(TSuccess value) => new(value, default, true);
+    /// <exception cref="InvalidOperationException"></exception>
+    public TResult Match<TResult>(
+        Func<TSuccess, TResult> onSuccess,
+        Func<TError, TResult>   onError)
+    {
+        return this switch
+               {
+                   Ok ok     => onSuccess(ok.Value),
+                   Error err => onError(err.Reason),
+                   _         => throw new InvalidOperationException("Unrecognized result type")
+               };
+    }
 
     /// <summary>
-    ///
+    ///     Represents a successful outcome.
     /// </summary>
-    /// <param name="error"></param>
-    /// <returns></returns>
-    public static Result<TError, TSuccess?> Failure(TError error) => new(default, error, false);
-#pragma warning restore CA1000
+    public sealed class Ok : Result<TSuccess, TError>
+    {
+        /// <summary>
+        ///     Creates a successful result.
+        /// </summary>
+        /// <param name="value">The result value.</param>
+        public Ok(TSuccess value)
+        {
+            Value = value;
+        }
+
+        /// <summary>
+        ///     The successful value.
+        /// </summary>
+        public TSuccess Value { get; }
+    }
 
     /// <summary>
-    ///
+    ///     Represents an error outcome.
     /// </summary>
-    /// <param name="success"></param>
-    /// <returns></returns>
-    public static implicit operator Result<TError, TSuccess>(TSuccess success) => new(success, default, true);
+    public sealed class Error : Result<TSuccess, TError>
+    {
+        /// <summary>
+        ///     Creates an error result.
+        /// </summary>
+        /// <param name="reason">The failure reason.</param>
+        public Error(TError reason)
+        {
+            Reason = reason;
+        }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="error"></param>
-    /// <returns></returns>
-    public static implicit operator Result<TError, TSuccess>(TError error) => new(default, error, false);
+        /// <summary>
+        ///     The error reason.
+        /// </summary>
+        public TError Reason { get; }
+    }
 }

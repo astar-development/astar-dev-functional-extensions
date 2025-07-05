@@ -1,0 +1,11 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #121212;
+}
+
+.dark #layout-root {
+    background-color: var(--bg);
+    color: var(--fg);
+}

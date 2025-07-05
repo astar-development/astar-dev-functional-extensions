@@ -1,0 +1,136 @@
+html {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body,
+main,
+.navbar,
+.card,
+input,
+button {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+
+:root {
+    --bg: #ffffff;
+    --fg: #212529;
+    --card-bg: #f8f9fa;
+    --input-bg: #ffffff;
+    --nav-bg: #f8f9fa;
+    --border: #ced4da;
+}
+
+.dark {
+    --bg: #121212;
+    --fg: #e0e0e0;
+    --card-bg: #1e1e1e;
+    --input-bg: #2a2a2a;
+    --nav-bg: #1f1f1f;
+    --border: #444;
+}
+
+body,
+.page,
+main,
+.container {
+    background-color: var(--bg) !important;
+    color: var(--fg);
+}
+
+input,
+textarea,
+select,
+button,
+.form-control {
+    background-color: var(--input-bg);
+    color: var(--fg);
+    border-color: var(--border);
+}
+
+.card,
+.card-body,
+fieldset {
+    background-color: var(--card-bg);
+    color: var(--fg);
+}
+
+.navbar {
+    background-color: var(--nav-bg) !important;
+    color: var(--fg) !important;
+    border-bottom: 1px solid var(--border);
+}
+
+.navbar .nav-link,
+.navbar-brand,
+.navbar-toggler {
+    color: var(--fg) !important;
+}
+
+.navbar .btn {
+    background-color: var(--input-bg);
+    color: var(--fg);
+    border-color: var(--border);
+}
+
+.debug-panel {
+    background-color: var(--bg);
+    color: var(--fg);
+    border-left: 5px solid #17a2b8;
+}
+
+.pipeline-step {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    animation: fadeIn 0.5s ease forwards;
+    opacity: 0;
+}
+
+.pipeline-step:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.pipeline-step:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.pipeline-step:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+/* Add more if needed based on structure */
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+.pipeline-badge {
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    min-width: 140px;
+    display: inline-block;
+    text-align: center;
+    font-weight: 500;
+    color: #333;
+    position: relative;
+}
+
+.pipeline-badge.warning {
+    background-color: #fff3cd;
+    color: #856404;
+    border-right: 4px solid #ffc107;
+    padding-right: 2rem; /* Add space for icon */
+}
+
+.pipeline-badge.warning::after {
+    content: "⚠️";
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+}

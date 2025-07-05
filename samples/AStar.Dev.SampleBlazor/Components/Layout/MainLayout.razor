@@ -1,0 +1,25 @@
+﻿@using AStar.Dev.SampleBlazor.Services
+@inherits LayoutComponentBase
+@inject ThemeService Theme
+<div class="page" id="layout-root">
+    <NavMenu/>
+    <main class="container mt-4">
+        @Body
+    </main>
+</div>
+
+@code {
+
+    private bool initialized;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && !initialized)
+        {
+            await Theme.InitializeAsync();
+            initialized = true;
+            StateHasChanged(); // To refresh any dependent UI (like the toggle)
+        }
+    }
+
+}

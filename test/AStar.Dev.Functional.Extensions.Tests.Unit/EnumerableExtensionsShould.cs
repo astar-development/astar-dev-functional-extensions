@@ -1,23 +1,47 @@
-using JetBrains.Annotations;
+namespace AStar.Dev.Functional.Extensions.Tests.Unit;
 
-namespace AStar.Dev.Functional.Extensions;
-
-[TestSubject(typeof(EnumerableExtensions))]
 public class EnumerableExtensionsShould
 {
     [Fact]
-    public void ReturnTheExpectedFirstObject()
+    public void FirstOrNone_ShouldReturnSome_WhenPredicateMatches()
     {
-        var list = new List<int> { 1, 2, 3 };
+        var list = new List<string> { "apple", "banana", "cherry" };
 
-        list.FirstOrNone(i => i == 2).ShouldBeAssignableTo<Some<int>>();
+        var result = list.FirstOrNone(s => s.StartsWith("b"));
+
+        result.ShouldBeOfType<Option<string>.Some>();
+        var some = result as Option<string>.Some;
+        some!.Value.ShouldBe("banana");
     }
 
     [Fact]
-    public void ReturnTheExpectedNoneObject()
+    public void FirstOrNone_ShouldReturnNone_WhenNoPredicateMatches()
     {
         var list = new List<int> { 1, 2, 3 };
 
-        list.FirstOrNone(i => i > 3).ShouldBeAssignableTo<None<int>>();
+        var result = list.FirstOrNone(n => n > 10);
+
+        result.ShouldBeOfType<Option<int>.None>();
+    }
+
+    [Fact]
+    public void FirstOrNone_ShouldReturnNone_ForEmptySequence()
+    {
+        var list = new List<int>();
+
+        var result = list.FirstOrNone(n => n == 0);
+
+        result.ShouldBeOfType<Option<int>.None>();
+    }
+
+    [Fact]
+    public void FirstOrNone_ShouldReturnFirstMatchingItem()
+    {
+        var list = new List<int> { 2, 4, 6 };
+
+        var result = list.FirstOrNone(n => n % 2 == 0);
+
+        var some = result.ShouldBeOfType<Option<int>.Some>();
+        some.Value.ShouldBe(2);
     }
 }

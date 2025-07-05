@@ -1,0 +1,28 @@
+@page "/divide"
+@using AStar.Dev.Functional.Extensions
+
+<h3>Divide Numbers</h3>
+
+<input @bind="a" type="number"/> ÷
+<input @bind="b" type="number"/>
+<button @onclick="Calculate">Go</button>
+
+<p>@resultMessage</p>
+
+@code {
+    private int    a;
+    private int    b             = 1;
+    private string resultMessage = "";
+
+    void Calculate()
+    {
+        Result<int, string> result = b == 0
+                                         ? new Result<int, string>.Error("Can't divide by zero")
+                                         : new Result<int, string>.Ok(a / b);
+
+        resultMessage = result.Match(
+                                     ok => $"Result: {ok}",
+                                     err => $"Error: {err}");
+    }
+
+}

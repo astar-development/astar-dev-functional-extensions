@@ -9,7 +9,8 @@
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <PackageId>AStar.Dev.Functional.Extensions</PackageId>
-        <Version>0.1.4-alpha</Version>
+        <Version>0.2.1-alpha</Version>
+        <PackageReadmeFile>Readme.md</PackageReadmeFile>
         <Authors>Jason</Authors>
         <Company>AStar Development</Company>
         <Description>F#-inspired Result type with functional combinators, async support, and LINQ integration.</Description>
@@ -22,10 +23,16 @@
         <LangVersion>latest</LangVersion>
         <Nullable>enable</Nullable>
         <IsPackable>true</IsPackable>
+        <Title>AStar.Dev.Functional.Extensions</Title>
+        <Copyright>AStar Development 2025</Copyright>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="Readme.md" Pack="true" PackagePath="\"/>
     </ItemGroup>
 
 </Project>

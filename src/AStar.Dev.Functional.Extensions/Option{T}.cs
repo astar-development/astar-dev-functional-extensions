@@ -81,7 +81,7 @@ public abstract class Option<T>
     public sealed class None : Option<T>
     {
         /// <summary>
-        ///     A helper method to create an instance of <see cref="None"/>
+        ///     A helper method to create an instance of <see cref="None" />
         /// </summary>
         public static readonly None Instance = new ();
 

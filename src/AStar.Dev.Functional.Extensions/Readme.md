@@ -1,103 +1,29 @@
-# 🎯 Option<T> Functional Cheat Sheet
+# AStar Dev Functional Extensions
 
-## 🧩 Option Overview
+## Overview
 
-Represents a value that might exist (`Some`) or not (`None`), avoiding nulls and enabling functional composition.
+This project contains a bunch of classes and extension methods to facilitate a more functional approach to handling errors and optional objects.
 
-```csharp
-Option<int> maybeNumber = Option.Some(42);
-Option<string> emptyName = Option.None<string>();
-```
+## Cheat Sheets
 
----
+### Result&lt;T&gt; and associated extensions
 
-## 🏗 Construction
+Cheat sheet is [here](Readme-result.md)
 
-| Syntax                      | Description                             |
-|-----------------------------|-----------------------------------------|
-| `Option.Some(value)`        | Wraps a non-null value as `Some`        |
-| `Option.None<T>()`          | Creates a `None` of type `T`            |
-| `value.ToOption()`          | Converts value or default to Option     |
-| `value.ToOption(predicate)` | Converts only if predicate returns true |
-| `nullable.ToOption()`       | Converts nullable struct to Option      |
+### Option&lt;T&gt; and associated extensions
 
----
+Cheat sheet is [here](Readme-option.md)
 
-## 🧪 Pattern Matching
+## Build and analysis
 
-```csharp
-option.Match(
-    some => $"Value: {some}",
-    ()   => "No value"
-);
-```
+### GitHub build
 
-Or via deconstruction:
+[![SonarQube](https://github.com/astar-development/astar-dev-functional-extensions/actions/workflows/dotnet.yml/badge.svg)](https://github.com/astar-development/astar-dev-functional-extensions/actions/workflows/dotnet.yml)
 
-```csharp
-var (isSome, value) = option;
-```
+### SonarQube details
 
-Or with TryGet:
-
-```csharp
-if (option.TryGetValue(out var value)) { /* use value */ }
-```
-
----
-
-## 🔧 Transformation
-
-| Method              | Description                                 |
-|---------------------|---------------------------------------------|
-| `Map(func)`         | Transforms value inside Some                |
-| `Bind(func)`        | Chains function that returns another Option |
-| `ToResult(errorFn)` | Converts Option to `Result<T, TError>`      |
-| `ToNullable()`      | Converts to nullable (structs only)         |
-| `ToEnumerable()`    | Converts to `IEnumerable<T>`                |
-
----
-
-## 🪄 LINQ Support
-
-```csharp
-var result =
-    from name in Option.Some("Jason")
-    from greeting in Option.Some($"Hello, {name}")
-    select greeting;
-```
-
-Via `Select`, `SelectMany`, or `SelectAwait` (async LINQ)
-
----
-
-## 🔁 Async Support
-
-| Method                       | Description                                   |
-|------------------------------|-----------------------------------------------|
-| `MapAsync(func)`             | Awaits and maps value                         |
-| `BindAsync(func)`            | Awaits and chains async Option-returning func |
-| `MatchAsync(onSome, onNone)` | Async pattern match                           |
-| `SelectAwait(func)`          | LINQ-friendly async projection                |
-
----
-
-## 🧯 Fallbacks and Conversions
-
-```csharp
-option.OrElse("fallback");      // returns value or fallback
-option.OrThrow();               // throws if None
-option.IsSome();                // true if Some
-option.IsNone();                // true if None
-```
-
----
-
-## 🐛 Debugging & Output
-
-```csharp
-option.ToString(); // Outputs "Some(value)" or "None"
-```
-
----
+|                                                                                                                                                                                                                                                            |                                                                                                                                                                                                                                                      |                                                                                                                                                                                                                                                 |                                                                                                                                                                                                                                                          |                                                                                                                                                                                                                                                                    |
+|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=astar-development_astar-dev-functional-extensions&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=astar-development_astar-dev-functional-extensions)      | [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=astar-development_astar-dev-functional-extensions&metric=bugs)](https://sonarcloud.io/summary/new_code?id=astar-development_astar-dev-functional-extensions)                       | [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=astar-development_astar-dev-functional-extensions&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=astar-development_astar-dev-functional-extensions)    | [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=astar-development_astar-dev-functional-extensions&metric=coverage)](https://sonarcloud.io/summary/new_code?id=astar-development_astar-dev-functional-extensions)                   | [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=astar-development_astar-dev-functional-extensions&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=astar-development_astar-dev-functional-extensions) |
+| [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=astar-development_astar-dev-functional-extensions&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=astar-development_astar-dev-functional-extensions) | [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=astar-development_astar-dev-functional-extensions&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=astar-development_astar-dev-functional-extensions) | [![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=astar-development_astar-dev-functional-extensions&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=astar-development_astar-dev-functional-extensions) | [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=astar-development_astar-dev-functional-extensions&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=astar-development_astar-dev-functional-extensions) | [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=astar-development_astar-dev-functional-extensions&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=astar-development_astar-dev-functional-extensions)               |
 

@@ -9,7 +9,7 @@
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <PackageId>AStar.Dev.Functional.Extensions</PackageId>
-        <Version>0.2.1-alpha</Version>
+        <Version>0.2.2-alpha</Version>
         <PackageReadmeFile>Readme.md</PackageReadmeFile>
         <Authors>Jason</Authors>
         <Company>AStar Development</Company>
@@ -25,6 +25,7 @@
         <IsPackable>true</IsPackable>
         <Title>AStar.Dev.Functional.Extensions</Title>
         <Copyright>AStar Development 2025</Copyright>
+        <PackageReleaseNotes>No changes in this version, just extending the documentation</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
@@ -33,6 +34,8 @@
 
     <ItemGroup>
         <None Include="Readme.md" Pack="true" PackagePath="\"/>
+        <None Include="Readme-result.md" Pack="true" PackagePath="\"/>
+        <None Include="Readme-option.md" Pack="true" PackagePath="\"/>
     </ItemGroup>
 
 </Project>

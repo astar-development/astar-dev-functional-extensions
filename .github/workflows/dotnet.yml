@@ -1,4 +1,4 @@
-name: .NET
+name: Build and analyze
 
 on:
   workflow_dispatch:

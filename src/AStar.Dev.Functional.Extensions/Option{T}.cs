@@ -13,26 +13,14 @@ public abstract class Option<T>
     }
 
     /// <summary>
-    ///     Overrides the ToString method to return both the type and, if present, the value.
-    /// </summary>
-    /// <returns></returns>
-    public override string ToString()
-    {
-        return this switch
-               {
-                   Some some => $"Some({some.Value})",
-                   None      => "None",
-                   _         => "Invalid"
-               };
-    }
-
-    /// <summary>
     ///     Implicitly converts a value to an <see cref="Option{T}" />.
     /// </summary>
     /// <param name="value">The value to wrap. Null becomes <see cref="None" />.</param>
     public static implicit operator Option<T>(T value)
     {
-        return value != null ? new Some(value) : None.Instance;
+        return value != null
+                   ? new Some(value)
+                   : None.Instance;
     }
 
     /// <summary>
@@ -73,6 +61,15 @@ public abstract class Option<T>
         ///     The wrapped value.
         /// </summary>
         public T Value { get; }
+
+        /// <summary>
+        ///     Overrides the ToString method to return both the type and the value.
+        /// </summary>
+        /// <returns>The overridden ToString</returns>
+        public override string ToString()
+        {
+            return $"Some({Value})";
+        }
     }
 
     /// <summary>
@@ -81,12 +78,21 @@ public abstract class Option<T>
     public sealed class None : Option<T>
     {
         /// <summary>
-        ///     A helper method to create an instance of <see cref="None" />
+        ///     A helper method to create an instance of <see cref="Option{T}.None" />
         /// </summary>
         public static readonly None Instance = new ();
 
         private None()
         {
+        }
+
+        /// <summary>
+        ///     Overrides the ToString method to return the type as a simple string.
+        /// </summary>
+        /// <returns>The overridden ToString</returns>
+        public override string ToString()
+        {
+            return "None";
         }
     }
 }

@@ -19,7 +19,7 @@ public partial class OptionDemo : ComponentBase
                             Timestamp = DateTime.Now
                         };
 
-        var validated = await UserService.TryValidateAsync(userInput);
+        var validated = await UsernameService.TryValidateAsync(userInput);
 
         pipelineSteps.Validated = validated;
         var mapped =  validated.Map(name => name.ToUpper());
@@ -54,7 +54,7 @@ public partial class OptionDemo : ComponentBase
         debugVisible = !debugVisible;
     }
 
-    private class PipelineLog
+    private sealed class PipelineLog
     {
         public string          Input        { get; set; } = "";
         public Option<string>? Validated    { get; set; }

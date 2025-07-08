@@ -49,6 +49,8 @@ Console.WriteLine(result2); // Output: Welcome, Jason!
 Option.Some("Jason");
 Option.None<string>();
 var (isSome, value) = Option.Some("hello");
+Console.WriteLine(isSome);
+Console.WriteLine(value);
 
 return;
 

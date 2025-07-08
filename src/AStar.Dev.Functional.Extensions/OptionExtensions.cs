@@ -36,19 +36,6 @@ public static class OptionExtensions
     }
 
     /// <summary>
-    ///     Enables deconstruction of an option into a boolean and value pair.
-    /// </summary>
-    /// <param name="option"></param>
-    /// <param name="isSome"></param>
-    /// <param name="value"></param>
-    /// <typeparam name="T"></typeparam>
-    public static void Deconstruct<T>(this Option<T> option, out bool isSome, out T? value)
-    {
-        isSome = option is Option<T>.Some;
-        value  = isSome ? ((Option<T>.Some)option).Value : default;
-    }
-
-    /// <summary>
     ///     Converts a value to an <see cref="Option{T}" /> if it satisfies the predicate.
     /// </summary>
     public static Option<T> ToOption<T>(this T value, Func<T, bool> predicate)
@@ -142,5 +129,18 @@ public static class OptionExtensions
     public static T OrThrow<T>(this Option<T> option, Exception? ex = null)
     {
         return option is Option<T>.Some some ? some.Value : throw ex ?? new InvalidOperationException("No value present");
+    }
+
+    /// <summary>
+    ///     Enables deconstruction of an option into a boolean and value pair.
+    /// </summary>
+    /// <param name="option"></param>
+    /// <param name="isSome"></param>
+    /// <param name="value"></param>
+    /// <typeparam name="T"></typeparam>
+    public static void Deconstruct<T>(this Option<T> option, out bool isSome, out T? value)
+    {
+        isSome = option is Option<T>.Some;
+        value  = isSome ? ((Option<T>.Some)option).Value : default;
     }
 }

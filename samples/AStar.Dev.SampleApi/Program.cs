@@ -34,4 +34,4 @@ app.MapGet("/parse", (string input) =>
                                              ex => Results.BadRequest(new { Error = ex.Message }));
                      });
 
-app.Run();
+await app.RunAsync();

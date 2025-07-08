@@ -34,5 +34,5 @@ jobs:
         run: dotnet pack ./src/${{ env.ProjectName }}/${{ env.ProjectName }}.csproj --configuration Release --output ./nupkg
 
       - name: 🚀 Publish to NuGet.org
-        run: dotnet nuget push ./nupkg/*.nupkg --skip-duplicate --source https://apiint.nugettest.org/v3/index.json # https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
+        run: dotnet nuget push ./nupkg/*.nupkg --skip-duplicate --source https://apiint.nugettest.org/v3/index.json --api-key ${{ secrets.NuGet_Test_API_Key }} # https://api.nuget.org/v3/index.json
 

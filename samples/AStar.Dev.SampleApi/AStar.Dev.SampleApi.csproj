@@ -8,11 +8,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.6"/>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.7" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\src\AStar.Dev.Functional.Extensions\AStar.Dev.Functional.Extensions.csproj"/>
+        <ProjectReference Include="..\..\src\AStar.Dev.Functional.Extensions\AStar.Dev.Functional.Extensions.csproj" />
     </ItemGroup>
 
 </Project>

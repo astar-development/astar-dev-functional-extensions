@@ -2,6 +2,9 @@ namespace AStar.Dev.Functional.Extensions.Tests.Unit;
 
 public class OptionShould
 {
+    private static readonly int[] ExpectedArrayOfInts  = [1, 2, 3];
+    private static readonly int[] ExpectedArrayOfInts2 = [20, 40];
+
     [Fact]
     public void MatchToSomeHandlerWhenOptionIsSome()
     {
@@ -649,7 +652,7 @@ public class OptionShould
         var result = options.Values().ToList();
 
         result.Count.ShouldBe(3);
-        result.ShouldBe(new[] { 1, 2, 3 });
+        result.ShouldBe(ExpectedArrayOfInts);
     }
 
     [Fact]
@@ -675,7 +678,7 @@ public class OptionShould
                                              : Option.None<int>()).ToList();
 
         result.Count.ShouldBe(2);
-        result.ShouldBe(new[] { 20, 40 });
+        result.ShouldBe(ExpectedArrayOfInts2);
     }
 
     [Fact]

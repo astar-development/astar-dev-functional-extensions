@@ -9,7 +9,7 @@
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <PackageId>AStar.Dev.Functional.Extensions</PackageId>
-        <Version>0.2.2-alpha</Version>
+        <Version>0.3.0-alpha</Version>
         <PackageReadmeFile>Readme.md</PackageReadmeFile>
         <Authors>Jason</Authors>
         <Company>AStar Development</Company>
@@ -25,7 +25,8 @@
         <IsPackable>true</IsPackable>
         <Title>AStar.Dev.Functional.Extensions</Title>
         <Copyright>AStar Development 2025</Copyright>
-        <PackageReleaseNotes>No changes in this version, just extending the documentation</PackageReleaseNotes>
+        <PackageReleaseNotes>A complete rewrite of Result etc., and additional extensions / objects.</PackageReleaseNotes>
+        <PackageIcon>astar.png</PackageIcon>
     </PropertyGroup>
 
     <ItemGroup>
@@ -33,9 +34,11 @@
     </ItemGroup>
 
     <ItemGroup>
+        <None Include="blog-post.md" Pack="true" PackagePath="\"/>
         <None Include="Readme.md" Pack="true" PackagePath="\"/>
         <None Include="Readme-result.md" Pack="true" PackagePath="\"/>
         <None Include="Readme-option.md" Pack="true" PackagePath="\"/>
+        <None Update="astar.png" Pack="true" PackagePath="\"/>
     </ItemGroup>
 
 </Project>

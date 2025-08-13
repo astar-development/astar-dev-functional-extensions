@@ -36,6 +36,13 @@ public abstract class Option<T>
             _         => throw new InvalidOperationException("It should not be possible to reach this point.")
         };
 
+    /// <summary>
+    ///     Determines whether the specified object is equal to the current <see cref="Option{T}" />.
+    /// </summary>
+    /// <param name="obj">The object to compare with the current instance.</param>
+    /// <returns>
+    ///     <c>true</c> if the specified object is equal to the current instance; otherwise, <c>false</c>.
+    /// </returns>
     public override bool Equals(object? obj)
     {
         if(obj is Option<T> other)
@@ -51,6 +58,14 @@ public abstract class Option<T>
         return false;
     }
 
+    /// <summary>
+    ///     Returns a hash code for the current instance of the <see cref="Option{T}" />.
+    ///     For <see cref="Option{T}.Some" />, the hash code is computed based on its type and value.
+    ///     For <see cref="Option{T}.None" />, the hash code is derived from its type.
+    /// </summary>
+    /// <returns>
+    ///     An integer representing the hash code of the current instance.
+    /// </returns>
     public override int GetHashCode() =>
         this switch
         {
@@ -59,8 +74,24 @@ public abstract class Option<T>
             _         => 0
         };
 
-    // Add equality operators
+    /// <summary>
+    ///     Determines whether two <see cref="Option{T}" /> instances are equal at a value level.
+    /// </summary>
+    /// <param name="left">The first <see cref="Option{T}" /> instance to compare.</param>
+    /// <param name="right">The second <see cref="Option{T}" /> instance to compare.</param>
+    /// <returns>
+    ///     True if the two <see cref="Option{T}" /> instances are considered equal; otherwise, false.
+    /// </returns>
     public static bool operator ==(Option<T> left, Option<T> right) => left.Equals(right);
+
+    /// <summary>
+    ///     Determines whether two <see cref="Option{T}" /> instances are not equal at a value level.
+    /// </summary>
+    /// <param name="left">The first <see cref="Option{T}" /> instance to compare.</param>
+    /// <param name="right">The second <see cref="Option{T}" /> instance to compare.</param>
+    /// <returns>
+    ///     <c>true</c> if the two instances are not equal; otherwise, <c>false</c>.
+    /// </returns>
     public static bool operator !=(Option<T> left, Option<T> right) => !left.Equals(right);
 
     /// <summary>

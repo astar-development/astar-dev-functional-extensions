@@ -22,14 +22,10 @@ patterns in C#.
 
 ### 🏗️ Structure
 
-encapsulates either: `Option<T>`
+`Option<T>` encapsulates either:
 
 - ✅ `Some(T)` — a present value
-- ❌ — the absence of a value `None`
-  t
-  t
-  t
-  t
+- ❌ `None` — the absence of a value
 
 ``` csharp
 // Create a Some option
@@ -229,3 +225,5 @@ public Option<BookReservation> ReserveBookWithLogging(string isbn, int quantity)
         });
 }
 ```
+
+Want more? Some additional documentation can be found [here](docs/advanced-usage-option.md) - focusing on async method usage.

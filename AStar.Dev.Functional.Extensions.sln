@@ -16,6 +16,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D1A87C44-FB0
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{0A5D570A-ACDC-429C-A9EA-9E8D9DA7774C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{16259E77-6EBB-4B17-94EF-AF149059D5D8}"
+	ProjectSection(SolutionItems) = preProject
+		Readme.md = Readme.md
+		Readme-result.md = Readme-result.md
+		Readme-option.md = Readme-option.md
+		blog-post.md = blog-post.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{211253BB-7DA6-4078-8105-61B7A58ABB35}"
+	ProjectSection(SolutionItems) = preProject
+		docs\advanced-usage-option.md = docs\advanced-usage-option.md
+		docs\advanced-usage.md = docs\advanced-usage.md
+		docs\basic-usage.md = docs\basic-usage.md
+		docs\core-concepts.md = docs\core-concepts.md
+		docs\error-handling-patterns.md = docs\error-handling-patterns.md
+		docs\method-reference.md = docs\method-reference.md
+		docs\testing.md = docs\testing.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,5 +54,6 @@ Global
 		{2C3EC910-77D3-475C-A9EE-E8F9F9C8C43C} = {267BE110-D583-4557-80D5-0D9E80A05542}
 		{46743FC5-9AAD-46A0-BD96-B2EEA6CE9E23} = {D1A87C44-FB04-49D8-8C34-C6CD33944612}
 		{CD5D55C2-C6D1-4E28-93FD-1A60118403CE} = {0A5D570A-ACDC-429C-A9EA-9E8D9DA7774C}
+		{211253BB-7DA6-4078-8105-61B7A58ABB35} = {16259E77-6EBB-4B17-94EF-AF149059D5D8}
 	EndGlobalSection
 EndGlobal

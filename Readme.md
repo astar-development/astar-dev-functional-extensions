@@ -12,6 +12,8 @@ Full details can be found [here](Readme-result.md)
 
 Full details can be found [here](Readme-option.md)
 
+In addition, there is a [blog post](blog-post.md) that, depending on when you see this, should have been published to this new-fangled t'interweb-thing...
+
 ## Build and analysis
 
 ### GitHub build

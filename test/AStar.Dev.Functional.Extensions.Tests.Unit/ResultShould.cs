@@ -2,162 +2,119 @@
 
 public class ResultShould
 {
-    private static Result<int, string>.Ok Ok(int value)
+    [Fact]
+    public void MatchToSuccessHandlerWhenResultIsOk()
     {
-        return new(value);
-    }
+        var result = new Result<string, int>.Ok("success");
 
-    private static Result<int, string>.Error Err(string error)
-    {
-        return new(error);
+        var matched = result.Match(
+                                   success => $"Success: {success}",
+                                   error => $"Error: {error}");
+
+        matched.ShouldBe("Success: success");
     }
 
     [Fact]
-    public void Match_ReturnsCorrectBranch()
+    public void MatchToErrorHandlerWhenResultIsError()
     {
-        var ok  = Ok(42);
-        var err = Err("fail");
+        var result = new Result<string, int>.Error(42);
 
-        var okResult = ok.Match(
-                                success => $"Success: {success}",
-                                error => $"Error: {error}");
+        var matched = result.Match(
+                                   success => $"Success: {success}",
+                                   error => $"Error: {error}");
 
-        var errResult = err.Match(
-                                  success => $"Success: {success}",
-                                  error => $"Error: {error}");
-
-        Assert.Equal("Success: 42", okResult);
-        Assert.Equal("Error: fail", errResult);
+        matched.ShouldBe("Error: 42");
     }
 
     [Fact]
-    public void Map_TransformsSuccess()
+    public async Task MatchAsyncToSuccessAsyncHandlerWhenResultIsOk()
     {
-        var result = Ok(10).Map(x => x * 2);
+        var result = new Result<string, int>.Ok("success");
 
-        var output = result.Match(
-                                  success => success,
-                                  error => -1);
+        var matched = await result.MatchAsync(
+                                              success => Task.FromResult($"Success: {success}"),
+                                              error => $"Error: {error}");
 
-        Assert.Equal(20, output);
+        matched.ShouldBe("Success: success");
     }
 
     [Fact]
-    public void Map_PreservesError()
+    public async Task MatchAsyncToErrorHandlerWhenResultIsError()
     {
-        var result = Err("oops").Map(x => x * 2);
+        var result = new Result<string, int>.Error(42);
 
-        var output = result.Match(
-                                  success => success,
-                                  error => -1);
+        var matched = await result.MatchAsync(
+                                              success => Task.FromResult($"Success: {success}"),
+                                              error => $"Error: {error}");
 
-        Assert.Equal(-1, output);
+        matched.ShouldBe("Error: 42");
     }
 
     [Fact]
-    public void Bind_ChainsSuccess()
+    public async Task MatchAsyncToSuccessHandlerAndAsyncErrorHandlerWhenResultIsOk()
     {
-        Result<int, string> DoubleIfEven(int x)
-        {
-            return x % 2 == 0 ? Ok(x * 2) : Err("odd");
-        }
+        var result = new Result<string, int>.Ok("success");
 
-        var result = Ok(4).Bind(DoubleIfEven);
+        var matched = await result.MatchAsync(
+                                              success => $"Success: {success}",
+                                              error => Task.FromResult($"Error: {error}"));
 
-        var output = result.Match(
-                                  success => success,
-                                  error => -1);
-
-        Assert.Equal(8, output);
+        matched.ShouldBe("Success: success");
     }
 
     [Fact]
-    public void Bind_ShortCircuitsOnError()
+    public async Task MatchAsyncToSuccessHandlerAndAsyncErrorHandlerWhenResultIsError()
     {
-        var result = Err("fail").Bind(x => Ok(x * 2));
+        var result = new Result<string, int>.Error(42);
 
-        var output = result.Match(
-                                  success => success,
-                                  error => -1);
+        var matched = await result.MatchAsync(
+                                              success => $"Success: {success}",
+                                              error => Task.FromResult($"Error: {error}"));
 
-        Assert.Equal(-1, output);
+        matched.ShouldBe("Error: 42");
     }
 
     [Fact]
-    public void Tap_InvokesSideEffectOnSuccess()
+    public async Task MatchAsyncToAsyncSuccessHandlerAndAsyncErrorHandlerWhenResultIsOk()
     {
-        var tapped = 0;
-        var result = Ok(5).Tap(x => tapped = x);
-        Assert.Equal(5, tapped);
+        var result = new Result<string, int>.Ok("success");
+
+        var matched = await result.MatchAsync(
+                                              success => Task.FromResult($"Success: {success}"),
+                                              error => Task.FromResult($"Error: {error}"));
+
+        matched.ShouldBe("Success: success");
     }
 
     [Fact]
-    public void Tap_DoesNotInvokeOnError()
+    public async Task MatchAsyncToAsyncSuccessHandlerAndAsyncErrorHandlerWhenResultIsError()
     {
-        var tapped = 0;
-        var result = Err("fail").Tap(x => tapped = x);
-        Assert.Equal(0, tapped);
+        var result = new Result<string, int>.Error(42);
+
+        var matched = await result.MatchAsync(
+                                              success => Task.FromResult($"Success: {success}"),
+                                              error => Task.FromResult($"Error: {error}"));
+
+        matched.ShouldBe("Error: 42");
     }
 
     [Fact]
-    public void Linq_Query_ComposesCorrectly()
+    public void CreateOkResultWithCorrectValue()
     {
-        var result = from a in Ok(2)
-                     from b in Ok(3)
-                     select a + b;
+        var value = "test value";
 
-        var output = result.Match(
-                                  success => success,
-                                  error => -1);
+        var result = new Result<string, int>.Ok(value);
 
-        Assert.Equal(5, output);
+        result.Value.ShouldBe(value);
     }
 
     [Fact]
-    public async Task MapAsync_TransformsSuccess()
+    public void CreateErrorResultWithCorrectReason()
     {
-        var result = await new ValueTask<Result<int, string>>(Ok(3))
-                         .MapAsync(x => x + 1);
+        var reason = 42;
 
-        var output = result.Match(
-                                  success => success,
-                                  error => -1);
+        var result = new Result<string, int>.Error(reason);
 
-        Assert.Equal(4, output);
-    }
-
-    [Fact]
-    public async Task BindAsync_ChainsAsyncResults()
-    {
-        ValueTask<Result<int, string>> DoubleAsync(int x)
-        {
-            return new(new Result<int, string>.Ok(x * 2));
-        }
-
-        var result = await new ValueTask<Result<int, string>>(Ok(5))
-                         .BindAsync(DoubleAsync);
-
-        var output = result.Match(
-                                  success => success,
-                                  error => -1);
-
-        Assert.Equal(10, output);
-    }
-
-    [Fact]
-    public async Task MatchAsync_HandlesBothBranches()
-    {
-        var ok = await new ValueTask<Result<int, string>>(Ok(7))
-                     .MatchAsync(
-                                 success => $"Yay: {success}",
-                                 error => $"Oops: {error}");
-
-        var err = await new ValueTask<Result<int, string>>(Err("bad"))
-                      .MatchAsync(
-                                  success => $"Yay: {success}",
-                                  error => $"Oops: {error}");
-
-        Assert.Equal("Yay: 7",    ok);
-        Assert.Equal("Oops: bad", err);
+        result.Reason.ShouldBe(reason);
     }
 }

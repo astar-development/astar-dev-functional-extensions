@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace AStar.Dev.Functional.Extensions;
 
@@ -16,12 +17,10 @@ public abstract class Option<T>
     ///     Implicitly converts a value to an <see cref="Option{T}" />.
     /// </summary>
     /// <param name="value">The value to wrap. Null becomes <see cref="None" />.</param>
-    public static implicit operator Option<T>(T value)
-    {
-        return value != null
-                   ? new Some(value)
-                   : None.Instance;
-    }
+    public static implicit operator Option<T>(T value) =>
+        value != null
+            ? new Some(value)
+            : None.Instance;
 
     /// <summary>
     ///     Pattern matches on the option.
@@ -29,15 +28,71 @@ public abstract class Option<T>
     /// <typeparam name="TResult">The return type.</typeparam>
     /// <param name="onSome">Function to run when the value is present.</param>
     /// <param name="onNone">Function to run when the value is absent.</param>
-    public TResult Match<TResult>(Func<T, TResult> onSome, Func<TResult> onNone)
+    public TResult Match<TResult>(Func<T, TResult> onSome, Func<TResult> onNone) =>
+        this switch
+        {
+            Some some => onSome(some.Value),
+            None x    => onNone(),
+            _         => throw new InvalidOperationException("It should not be possible to reach this point.")
+        };
+
+    /// <summary>
+    ///     Determines whether the specified object is equal to the current <see cref="Option{T}" />.
+    /// </summary>
+    /// <param name="obj">The object to compare with the current instance.</param>
+    /// <returns>
+    ///     <c>true</c> if the specified object is equal to the current instance; otherwise, <c>false</c>.
+    /// </returns>
+    public override bool Equals(object? obj)
     {
-        return this switch
-               {
-                   Some some => onSome(some.Value),
-                   None x    => onNone(),
-                   _         => throw new InvalidOperationException("It should not be possible to reach this point.")
-               };
+        if(obj is Option<T> other)
+        {
+            return this switch
+                   {
+                       Some some => other is Some otherSome && EqualityComparer<T>.Default.Equals(some.Value, otherSome.Value),
+                       None      => other is None,
+                       _         => false
+                   };
+        }
+
+        return false;
     }
+
+    /// <summary>
+    ///     Returns a hash code for the current instance of the <see cref="Option{T}" />.
+    ///     For <see cref="Option{T}.Some" />, the hash code is computed based on its type and value.
+    ///     For <see cref="Option{T}.None" />, the hash code is derived from its type.
+    /// </summary>
+    /// <returns>
+    ///     An integer representing the hash code of the current instance.
+    /// </returns>
+    public override int GetHashCode() =>
+        this switch
+        {
+            Some some => HashCode.Combine(typeof(Some), some.Value),
+            None      => typeof(None).GetHashCode(),
+            _         => 0
+        };
+
+    /// <summary>
+    ///     Determines whether two <see cref="Option{T}" /> instances are equal at a value level.
+    /// </summary>
+    /// <param name="left">The first <see cref="Option{T}" /> instance to compare.</param>
+    /// <param name="right">The second <see cref="Option{T}" /> instance to compare.</param>
+    /// <returns>
+    ///     True if the two <see cref="Option{T}" /> instances are considered equal; otherwise, false.
+    /// </returns>
+    public static bool operator ==(Option<T> left, Option<T> right) => left.Equals(right);
+
+    /// <summary>
+    ///     Determines whether two <see cref="Option{T}" /> instances are not equal at a value level.
+    /// </summary>
+    /// <param name="left">The first <see cref="Option{T}" /> instance to compare.</param>
+    /// <param name="right">The second <see cref="Option{T}" /> instance to compare.</param>
+    /// <returns>
+    ///     <c>true</c> if the two instances are not equal; otherwise, <c>false</c>.
+    /// </returns>
+    public static bool operator !=(Option<T> left, Option<T> right) => !left.Equals(right);
 
     /// <summary>
     ///     Represents the presence of a value.
@@ -51,8 +106,10 @@ public abstract class Option<T>
         /// <exception cref="ArgumentNullException" />
         public Some(T value)
         {
-            if (value is null)
+            if(value is null)
+            {
                 throw new ArgumentNullException(nameof(value));
+            }
 
             Value = value;
         }
@@ -66,10 +123,7 @@ public abstract class Option<T>
         ///     Overrides the ToString method to return both the type and the value.
         /// </summary>
         /// <returns>The overridden ToString</returns>
-        public override string ToString()
-        {
-            return $"Some({Value})";
-        }
+        public override string ToString() => $"Some({Value})";
     }
 
     /// <summary>
@@ -80,7 +134,7 @@ public abstract class Option<T>
         /// <summary>
         ///     A helper method to create an instance of <see cref="Option{T}.None" />
         /// </summary>
-        public static readonly None Instance = new ();
+        public static readonly None Instance = new();
 
         private None()
         {
@@ -90,9 +144,6 @@ public abstract class Option<T>
         ///     Overrides the ToString method to return the type as a simple string.
         /// </summary>
         /// <returns>The overridden ToString</returns>
-        public override string ToString()
-        {
-            return "None";
-        }
+        public override string ToString() => "None";
     }
 }

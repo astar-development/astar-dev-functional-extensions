@@ -6,7 +6,7 @@ public class PatternTests
     public void IsSome_And_IsNone_WorkCorrectly()
     {
         Option<string> some = new Option<string>.Some("value");
-        var            none =  Option.None<string>();
+        var            none = Option.None<string>();
 
         Assert.True(Pattern.IsSome(some));
         Assert.False(Pattern.IsNone(some));
@@ -31,8 +31,8 @@ public class PatternTests
     [Fact]
     public void IsSuccess_And_IsFailure_WorkCorrectly()
     {
-        var success = Try<int>.Run(() => 1);
-        var failure = Try<int>.Run(() => throw new ("fail"));
+        var success = Try.Run(() => 1);
+        var failure = Try.Run<int>(() => throw new ArgumentNullException("fail"));
 
         Assert.True(Pattern.IsSuccess(success));
         Assert.False(Pattern.IsFailure(success));

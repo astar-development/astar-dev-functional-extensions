@@ -2,9 +2,6 @@ name: 🚀 Publish NuGet Package
 
 on:
   workflow_dispatch:
-#  push:
-#    branches:
-#      - main
 
 jobs:
   build:
@@ -26,9 +23,6 @@ jobs:
 
       - name: 🛠 Build solution
         run: dotnet build --configuration Release
-
-      #      - name: 🧪 Run tests
-      #        run: dotnet test --configuration Release --no-build
 
       - name: 📦 Pack NuGet package
         run: dotnet pack ./src/${{ env.ProjectName }}/${{ env.ProjectName }}.csproj --configuration Release --output ./nupkg

@@ -18,7 +18,7 @@ In addition, there is a [blog post](blog-post.md) that, depending on when you se
 
 ### GitHub build
 
-[![SonarQube](https://github.com/astar-development/astar-dev-functional-extensions/actions/workflows/dotnet.yml/badge.svg)](https://github.com/astar-development/astar-dev-functional-extensions/actions/workflows/dotnet.yml)
+[![Build and analyse with SonarQube](https://github.com/astar-development/astar-dev-functional-extensions/actions/workflows/dotnet.yml/badge.svg)](https://github.com/astar-development/astar-dev-functional-extensions/actions/workflows/dotnet.yml)
 
 ### SonarQube details
 

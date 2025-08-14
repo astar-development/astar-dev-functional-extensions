@@ -23,6 +23,7 @@
         <LangVersion>latest</LangVersion>
         <Nullable>enable</Nullable>
         <IsPackable>true</IsPackable>
+        <PackageReadmeFile>Readme.md</PackageReadmeFile>
         <Title>AStar.Dev.Functional.Extensions</Title>
         <Copyright>AStar Development 2025</Copyright>
         <PackageReleaseNotes>A complete rewrite of Result etc., and additional extensions / objects.</PackageReleaseNotes>
@@ -34,11 +35,10 @@
     </ItemGroup>
 
     <ItemGroup>
-        <None Include="blog-post.md" Pack="true" PackagePath="\"/>
-        <None Include="Readme.md" Pack="true" PackagePath="\"/>
-        <None Include="Readme-result.md" Pack="true" PackagePath="\"/>
-        <None Include="Readme-option.md" Pack="true" PackagePath="\"/>
-        <None Update="astar.png" Pack="true" PackagePath="\"/>
+      <None Include="..\..\astar.png" Pack="True" PackagePath="/" Link="astar.png"/>
+      <None Include="..\..\Readme.md" Pack="True" PackagePath="/" Link="Readme.md"/>
+      <None Include="..\..\Readme-option.md" Pack="True" PackagePath="/" Link="Readme-option.md"/>
+      <None Include="..\..\Readme-result.md" Pack="True" PackagePath="/" Link="Readme-result.md"/>
     </ItemGroup>
 
 </Project>

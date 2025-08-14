@@ -15,7 +15,7 @@ public class ResultExtensionsShould
 
         var matchResult = mapped.Match(
                                        ok => ok,
-                                       err => throw new("Should not be error")
+                                       err => throw new InvalidOperationException("Should not be error")
                                       );
 
         matchResult.ShouldBe("42");
@@ -31,7 +31,7 @@ public class ResultExtensionsShould
         mapped.ShouldBeOfType<Result<string, string>.Error>();
 
         var matchResult = mapped.Match(
-                                       _ => throw new("Should not be success"),
+                                       _ => throw new InvalidOperationException("Should not be success"),
                                        err => err
                                       );
 
@@ -49,7 +49,7 @@ public class ResultExtensionsShould
 
         var matchResult = mapped.Match(
                                        ok => ok,
-                                       _ => throw new("Should not be error")
+                                       _ => throw new InvalidOperationException("Should not be error")
                                       );
 
         matchResult.ShouldBe("42");
@@ -65,7 +65,7 @@ public class ResultExtensionsShould
         mapped.ShouldBeOfType<Result<string, string>.Error>();
 
         var matchResult = mapped.Match(
-                                       _ => throw new("Should not be success"),
+                                       _ => throw new InvalidOperationException("Should not be success"),
                                        err => err
                                       );
 
@@ -83,7 +83,7 @@ public class ResultExtensionsShould
 
         var matchResult = mapped.Match(
                                        ok => ok,
-                                       _ => throw new("Should not be error")
+                                       _ => throw new InvalidOperationException("Should not be error")
                                       );
 
         matchResult.ShouldBe("42");
@@ -99,7 +99,7 @@ public class ResultExtensionsShould
         mapped.ShouldBeOfType<Result<string, string>.Error>();
 
         var matchResult = mapped.Match(
-                                       _ => throw new("Should not be success"),
+                                       _ => throw new InvalidOperationException("Should not be success"),
                                        err => err
                                       );
 
@@ -117,7 +117,7 @@ public class ResultExtensionsShould
 
         var matchResult = mapped.Match(
                                        ok => ok,
-                                       _ => throw new("Should not be error")
+                                       _ => throw new InvalidOperationException("Should not be error")
                                       );
 
         matchResult.ShouldBe("42");
@@ -133,7 +133,7 @@ public class ResultExtensionsShould
         mapped.ShouldBeOfType<Result<string, string>.Error>();
 
         var matchResult = mapped.Match(
-                                       _ => throw new("Should not be success"),
+                                       _ => throw new InvalidOperationException("Should not be success"),
                                        err => err
                                       );
 
@@ -154,7 +154,7 @@ public class ResultExtensionsShould
         mapped.ShouldBeOfType<Result<string, string>.Error>();
 
         var matchResult = mapped.Match(
-                                       _ => throw new("Should not be success"),
+                                       _ => throw new InvalidOperationException("Should not be success"),
                                        err => err
                                       );
 
@@ -172,7 +172,7 @@ public class ResultExtensionsShould
 
         var matchResult = mapped.Match(
                                        ok => ok,
-                                       _ => throw new("Should not be error")
+                                       _ => throw new InvalidOperationException("Should not be error")
                                       );
 
         matchResult.ShouldBe("success");
@@ -188,7 +188,7 @@ public class ResultExtensionsShould
         mapped.ShouldBeOfType<Result<string, string>.Error>();
 
         var matchResult = mapped.Match(
-                                       _ => throw new("Should not be success"),
+                                       _ => throw new InvalidOperationException("Should not be success"),
                                        err => err
                                       );
 
@@ -206,7 +206,7 @@ public class ResultExtensionsShould
 
         var matchResult = mapped.Match(
                                        ok => ok,
-                                       _ => throw new("Should not be error")
+                                       _ => throw new InvalidOperationException("Should not be error")
                                       );
 
         matchResult.ShouldBe("success");
@@ -222,7 +222,7 @@ public class ResultExtensionsShould
         mapped.ShouldBeOfType<Result<string, string>.Error>();
 
         var matchResult = mapped.Match(
-                                       _ => throw new("Should not be success"),
+                                       _ => throw new InvalidOperationException("Should not be success"),
                                        err => err
                                       );
 
@@ -240,7 +240,7 @@ public class ResultExtensionsShould
 
         var matchResult = mapped.Match(
                                        ok => ok,
-                                       _ => throw new("Should not be error")
+                                       _ => throw new InvalidOperationException("Should not be error")
                                       );
 
         matchResult.ShouldBe("success");
@@ -256,7 +256,7 @@ public class ResultExtensionsShould
         mapped.ShouldBeOfType<Result<string, string>.Error>();
 
         var matchResult = mapped.Match(
-                                       _ => throw new("Should not be success"),
+                                       _ => throw new InvalidOperationException("Should not be success"),
                                        err => err
                                       );
 
@@ -274,7 +274,7 @@ public class ResultExtensionsShould
 
         var matchResult = mapped.Match(
                                        ok => ok,
-                                       _ => throw new("Should not be error")
+                                       _ => throw new InvalidOperationException("Should not be error")
                                       );
 
         matchResult.ShouldBe("success");
@@ -295,7 +295,7 @@ public class ResultExtensionsShould
 
         var matchResult = bound.Match(
                                       ok => ok,
-                                      _ => throw new("Should not be error")
+                                      _ => throw new InvalidOperationException("Should not be error")
                                      );
 
         matchResult.ShouldBe("42");
@@ -311,7 +311,7 @@ public class ResultExtensionsShould
         bound.ShouldBeOfType<Result<string, string>.Error>();
 
         var matchResult = bound.Match(
-                                      _ => throw new("Should not be success"),
+                                      _ => throw new InvalidOperationException("Should not be success"),
                                       err => err
                                      );
 
@@ -328,7 +328,7 @@ public class ResultExtensionsShould
         bound.ShouldBeOfType<Result<string, string>.Error>();
 
         var matchResult = bound.Match(
-                                      _ => throw new("Should not be success"),
+                                      _ => throw new InvalidOperationException("Should not be success"),
                                       err => err
                                      );
 
@@ -346,7 +346,7 @@ public class ResultExtensionsShould
 
         var matchResult = bound.Match(
                                       ok => ok,
-                                      _ => throw new("Should not be error")
+                                      _ => throw new InvalidOperationException("Should not be error")
                                      );
 
         matchResult.ShouldBe("42");
@@ -362,7 +362,7 @@ public class ResultExtensionsShould
         bound.ShouldBeOfType<Result<string, string>.Error>();
 
         var matchResult = bound.Match(
-                                      _ => throw new("Should not be success"),
+                                      _ => throw new InvalidOperationException("Should not be success"),
                                       err => err
                                      );
 
@@ -379,7 +379,7 @@ public class ResultExtensionsShould
         bound.ShouldBeOfType<Result<string, string>.Error>();
 
         var matchResult = bound.Match(
-                                      _ => throw new("Should not be success"),
+                                      _ => throw new InvalidOperationException("Should not be success"),
                                       err => err
                                      );
 
@@ -397,7 +397,7 @@ public class ResultExtensionsShould
 
         var matchResult = bound.Match(
                                       ok => ok,
-                                      _ => throw new("Should not be error")
+                                      _ => throw new InvalidOperationException("Should not be error")
                                      );
 
         matchResult.ShouldBe("42");
@@ -413,7 +413,7 @@ public class ResultExtensionsShould
         bound.ShouldBeOfType<Result<string, string>.Error>();
 
         var matchResult = bound.Match(
-                                      _ => throw new("Should not be success"),
+                                      _ => throw new InvalidOperationException("Should not be success"),
                                       err => err
                                      );
 
@@ -430,7 +430,7 @@ public class ResultExtensionsShould
         bound.ShouldBeOfType<Result<string, string>.Error>();
 
         var matchResult = bound.Match(
-                                      _ => throw new("Should not be success"),
+                                      _ => throw new InvalidOperationException("Should not be success"),
                                       err => err
                                      );
 
@@ -448,7 +448,7 @@ public class ResultExtensionsShould
 
         var matchResult = bound.Match(
                                       ok => ok,
-                                      _ => throw new("Should not be error")
+                                      _ => throw new InvalidOperationException("Should not be error")
                                      );
 
         matchResult.ShouldBe("42");
@@ -464,7 +464,7 @@ public class ResultExtensionsShould
         bound.ShouldBeOfType<Result<string, string>.Error>();
 
         var matchResult = bound.Match(
-                                      _ => throw new("Should not be success"),
+                                      _ => throw new InvalidOperationException("Should not be success"),
                                       err => err
                                      );
 
@@ -481,7 +481,7 @@ public class ResultExtensionsShould
         bound.ShouldBeOfType<Result<string, string>.Error>();
 
         var matchResult = bound.Match(
-                                      _ => throw new("Should not be success"),
+                                      _ => throw new InvalidOperationException("Should not be success"),
                                       err => err
                                      );
 

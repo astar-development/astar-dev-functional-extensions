@@ -9,7 +9,7 @@
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <PackageId>AStar.Dev.Functional.Extensions</PackageId>
-        <Version>0.3.2-alpha</Version>
+        <Version>0.4.0</Version>
         <PackageReadmeFile>Readme.md</PackageReadmeFile>
         <Authors>AStar Development, Jason Barden</Authors>
         <Company>AStar Development</Company>

@@ -9,7 +9,7 @@
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <PackageId>AStar.Dev.Functional.Extensions</PackageId>
-        <Version>0.3.1-alpha</Version>
+        <Version>0.3.2-alpha</Version>
         <PackageReadmeFile>Readme.md</PackageReadmeFile>
         <Authors>AStar Development, Jason Barden</Authors>
         <Company>AStar Development</Company>
@@ -26,7 +26,7 @@
         <PackageReadmeFile>Readme.md</PackageReadmeFile>
         <Title>AStar.Dev.Functional.Extensions</Title>
         <Copyright>AStar Development 2025</Copyright>
-        <PackageReleaseNotes>A complete rewrite of Result etc., and additional extensions / objects.</PackageReleaseNotes>
+        <PackageReleaseNotes>Add an extension method to convert a failures exception message to an instance of the ErrorResponse class.</PackageReleaseNotes>
         <PackageIcon>astar.png</PackageIcon>
     </PropertyGroup>
 

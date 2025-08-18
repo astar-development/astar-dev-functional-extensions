@@ -9,7 +9,7 @@
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <PackageId>AStar.Dev.Functional.Extensions</PackageId>
-        <Version>0.4.0</Version>
+        <Version>0.4.1</Version>
         <PackageReadmeFile>Readme.md</PackageReadmeFile>
         <Authors>AStar Development, Jason Barden</Authors>
         <Company>AStar Development</Company>
@@ -26,7 +26,7 @@
         <PackageReadmeFile>Readme.md</PackageReadmeFile>
         <Title>AStar.Dev.Functional.Extensions</Title>
         <Copyright>AStar Development 2025</Copyright>
-        <PackageReleaseNotes>Add an extension method to convert a failures exception message to an instance of the ErrorResponse class.</PackageReleaseNotes>
+        <PackageReleaseNotes>Add a pair of additional extension methods for MatchAsync to handle additional scenarios.</PackageReleaseNotes>
         <PackageIcon>astar.png</PackageIcon>
     </PropertyGroup>
 

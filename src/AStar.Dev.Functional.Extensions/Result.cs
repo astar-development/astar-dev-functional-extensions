@@ -89,6 +89,44 @@ public abstract class Result<TSuccess, TError>
             Error err => await onFailure(err.Reason),
             _         => throw new InvalidOperationException($"Unrecognized result type: {GetType().Name}")
         };
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TSuccess"></typeparam>
+        /// <typeparam name="TError"></typeparam>
+        /// <typeparam name="TResult"></typeparam>
+        /// <param name="resultTask"></param>
+        /// <param name="onSuccess"></param>
+        /// <param name="onFailure"></param>
+        /// <returns></returns>
+            public static async Task<TResult> MatchAsync<TSuccess, TError, TResult>(
+                this Task<Result<TSuccess, TError>> resultTask,
+                Func<TSuccess, Task<TResult>> onSuccess,
+                Func<TError, Task<TResult>> onFailure)
+            {
+                var result = await resultTask;
+                return await result.Match(onSuccess, onFailure);
+            }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TSuccess"></typeparam>
+        /// <typeparam name="TError"></typeparam>
+        /// <typeparam name="TResult"></typeparam>
+        /// <param name="resultTask"></param>
+        /// <param name="onSuccess"></param>
+        /// <param name="onFailure"></param>
+        /// <returns></returns>
+        public static async Task<TResult> MatchAsync<TSuccess, TError, TResult>(
+            this Task<Result<TSuccess, TError>> resultTask,
+            Func<TSuccess, TResult>             onSuccess,
+            Func<TError, TResult>               onFailure)
+        {
+            var result = await resultTask;
+            return result.Match(onSuccess, onFailure);
+        }
 #pragma warning restore S3060
 
     /// <summary>

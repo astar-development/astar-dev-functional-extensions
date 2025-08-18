@@ -89,6 +89,7 @@ public abstract class Result<TSuccess, TError>
             Error err => await onFailure(err.Reason),
             _         => throw new InvalidOperationException($"Unrecognized result type: {GetType().Name}")
         };
+
 #pragma warning restore S3060
 
     /// <summary>

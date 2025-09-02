@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 namespace AStar.Dev.Functional.Extensions;
 
 /// <summary>
@@ -43,20 +40,13 @@ public abstract class Option<T>
     /// <returns>
     ///     <c>true</c> if the specified object is equal to the current instance; otherwise, <c>false</c>.
     /// </returns>
-    public override bool Equals(object? obj)
-    {
-        if(obj is Option<T> other)
-        {
-            return this switch
-                   {
-                       Some some => other is Some otherSome && EqualityComparer<T>.Default.Equals(some.Value, otherSome.Value),
-                       None      => other is None,
-                       _         => false
-                   };
-        }
-
-        return false;
-    }
+    public override bool Equals(object? obj) =>
+        obj is Option<T> other && this switch
+                                  {
+                                      Some some => other is Some otherSome && EqualityComparer<T>.Default.Equals(some.Value, otherSome.Value),
+                                      None      => other is None,
+                                      _         => false
+                                  };
 
     /// <summary>
     ///     Returns a hash code for the current instance of the <see cref="Option{T}" />.

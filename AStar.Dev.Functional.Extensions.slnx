@@ -1,0 +1,28 @@
+<Solution>
+    <Folder Name="/.github/"/>
+    <Folder Name="/.github/workflows/">
+        <File Path=".github/workflows/dotnet.yml"/>
+        <File Path=".github/workflows/publish.yml"/>
+    </Folder>
+    <Folder Name="/Solution Items/">
+        <File Path="blog-post.md"/>
+        <File Path="Readme-option.md"/>
+        <File Path="Readme-result.md"/>
+        <File Path="Readme.md"/>
+    </Folder>
+    <Folder Name="/Solution Items/Docs/">
+        <File Path="docs/advanced-usage-option.md"/>
+        <File Path="docs/advanced-usage.md"/>
+        <File Path="docs/basic-usage.md"/>
+        <File Path="docs/core-concepts.md"/>
+        <File Path="docs/error-handling-patterns.md"/>
+        <File Path="docs/method-reference.md"/>
+        <File Path="docs/testing.md"/>
+    </Folder>
+    <Folder Name="/src/">
+        <Project Path="src/AStar.Dev.Functional.Extensions/AStar.Dev.Functional.Extensions.csproj"/>
+    </Folder>
+    <Folder Name="/test/">
+        <Project Path="test/AStar.Dev.Functional.Extensions.Tests.Unit/AStar.Dev.Functional.Extensions.Tests.Unit.csproj"/>
+    </Folder>
+</Solution>

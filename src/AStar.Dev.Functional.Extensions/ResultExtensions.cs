@@ -1,6 +1,4 @@
-using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Threading.Tasks;
 
 namespace AStar.Dev.Functional.Extensions;
 
@@ -10,44 +8,44 @@ namespace AStar.Dev.Functional.Extensions;
 [SuppressMessage("ReSharper", "GrammarMistakeInComment")]
 public static class ResultExtensions
 {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <typeparam name="TSuccess"></typeparam>
-        /// <typeparam name="TError"></typeparam>
-        /// <typeparam name="TResult"></typeparam>
-        /// <param name="resultTask"></param>
-        /// <param name="onSuccess"></param>
-        /// <param name="onFailure"></param>
-        /// <returns></returns>
-            public static async Task<TResult> MatchAsync<TSuccess, TError, TResult>(
-                this Task<Result<TSuccess, TError>> resultTask,
-                Func<TSuccess, Task<TResult>> onSuccess,
-                Func<TError, Task<TResult>> onFailure)
-            {
-                var result = await resultTask;
-                return await result.Match(onSuccess, onFailure);
-            }
+    /// <summary>
+    /// </summary>
+    /// <typeparam name="TSuccess"></typeparam>
+    /// <typeparam name="TError"></typeparam>
+    /// <typeparam name="TResult"></typeparam>
+    /// <param name="resultTask"></param>
+    /// <param name="onSuccess"></param>
+    /// <param name="onFailure"></param>
+    /// <returns></returns>
+    public static async Task<TResult> MatchAsync<TSuccess, TError, TResult>(
+        this Task<Result<TSuccess, TError>> resultTask,
+        Func<TSuccess, Task<TResult>>       onSuccess,
+        Func<TError, Task<TResult>>         onFailure)
+    {
+        var result = await resultTask;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <typeparam name="TSuccess"></typeparam>
-        /// <typeparam name="TError"></typeparam>
-        /// <typeparam name="TResult"></typeparam>
-        /// <param name="resultTask"></param>
-        /// <param name="onSuccess"></param>
-        /// <param name="onFailure"></param>
-        /// <returns></returns>
-        public static async Task<TResult> MatchAsync<TSuccess, TError, TResult>(
-            this Task<Result<TSuccess, TError>> resultTask,
-            Func<TSuccess, TResult>             onSuccess,
-            Func<TError, TResult>               onFailure)
-        {
-            var result = await resultTask;
-            return result.Match(onSuccess, onFailure);
-        }
-        
+        return await result.Match(onSuccess, onFailure);
+    }
+
+    /// <summary>
+    /// </summary>
+    /// <typeparam name="TSuccess"></typeparam>
+    /// <typeparam name="TError"></typeparam>
+    /// <typeparam name="TResult"></typeparam>
+    /// <param name="resultTask"></param>
+    /// <param name="onSuccess"></param>
+    /// <param name="onFailure"></param>
+    /// <returns></returns>
+    public static async Task<TResult> MatchAsync<TSuccess, TError, TResult>(
+        this Task<Result<TSuccess, TError>> resultTask,
+        Func<TSuccess, TResult>             onSuccess,
+        Func<TError, TResult>               onFailure)
+    {
+        var result = await resultTask;
+
+        return result.Match(onSuccess, onFailure);
+    }
+
     /// <summary>
     ///     Transforms the success value of a <see cref="Result{TSuccess, TError}" /> using the specified mapping function.
     /// </summary>
@@ -62,7 +60,7 @@ public static class ResultExtensions
     /// </returns>
     public static Result<TNew, TError> Map<TSuccess, TError, TNew>(
         this Result<TSuccess, TError> result,
-        Func<TSuccess, TNew> map) =>
+        Func<TSuccess, TNew>          map) =>
         result.Match<Result<TNew, TError>>(
                                            ok => new Result<TNew, TError>.Ok(map(ok)),
                                            err => new Result<TNew, TError>.Error(err)

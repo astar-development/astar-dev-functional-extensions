@@ -36,14 +36,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All"/>
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.201" PrivateAssets="all" />
     </ItemGroup>
 
     <ItemGroup>
-        <None Include="..\..\astar.png" Pack="True" PackagePath="/" Link="astar.png"/>
-        <None Include="..\..\Readme.md" Pack="True" PackagePath="/" Link="Readme.md"/>
-        <None Include="..\..\Readme-option.md" Pack="True" PackagePath="/" Link="Readme-option.md"/>
-        <None Include="..\..\Readme-result.md" Pack="True" PackagePath="/" Link="Readme-result.md"/>
+        <None Include="..\..\astar.png" Pack="True" PackagePath="/" Link="astar.png" />
+        <None Include="..\..\Readme.md" Pack="True" PackagePath="/" Link="Readme.md" />
+        <None Include="..\..\Readme-option.md" Pack="True" PackagePath="/" Link="Readme-option.md" />
+        <None Include="..\..\Readme-result.md" Pack="True" PackagePath="/" Link="Readme-result.md" />
     </ItemGroup>
 
 </Project>
